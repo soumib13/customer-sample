@@ -1,6 +1,7 @@
 package com.pradeepl.akkakata.api;
 
 import akka.javasdk.annotations.http.Delete;
+import akka.javasdk.annotations.http.Get;
 import akka.javasdk.annotations.http.HttpEndpoint;
 import akka.javasdk.annotations.http.Post;
 import akka.javasdk.client.ComponentClient;
@@ -18,6 +19,8 @@ import akka.javasdk.http.HttpResponses;
 import java.util.List;
 
 import com.pradeepl.akkakata.domain.entities.CustomerEntity;
+import com.pradeepl.akkakata.views.CustomerView;
+import com.pradeepl.akkakata.views.CustomerView.customerEntry;
 import com.pradeepl.akkakata.domain.commands.CustomerCommands.*;
 
 
@@ -56,4 +59,13 @@ public class CustomerEndpoint {
 
         return "OK";
     }
+
+    @Get("/customers")
+    public customerEntry getCustomers() {
+        
+        return client.forView()
+            .method(CustomerView::getAll)
+            .invoke();
+    }
+
 }
