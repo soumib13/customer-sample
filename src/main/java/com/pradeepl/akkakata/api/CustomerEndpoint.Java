@@ -1,5 +1,6 @@
 package com.pradeepl.akkakata.api;
 
+import akka.javasdk.annotations.http.Delete;
 import akka.javasdk.annotations.http.HttpEndpoint;
 import akka.javasdk.annotations.http.Post;
 import akka.javasdk.client.ComponentClient;
@@ -43,5 +44,16 @@ public class CustomerEndpoint {
             .invoke(cmd);
 
         return new CreateCustomerResponse( customerId, request.FirstName, request.LastName);
+    }
+
+    @Delete("/customers/{customerId}")
+    public String deleteCustomer(String customerId)
+    {
+        var cmd = new DeleteCustomer();
+        client.forEventSourcedEntity(customerId)
+            .method(CustomerEntity::delete)
+            .invoke(cmd);
+
+        return "OK";
     }
 }

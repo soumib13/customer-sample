@@ -3,9 +3,10 @@ package com.pradeepl.akkakata.domain.model;
 public record CustomerState(
     String customerId,
     String FirstName,
-    String LastName
+    String LastName,
+    boolean deleted
 ) {
     public static CustomerState empty () {
-        return new CustomerState(null, null, null);
+        return new CustomerState(null, null, null, false);
     }
 }

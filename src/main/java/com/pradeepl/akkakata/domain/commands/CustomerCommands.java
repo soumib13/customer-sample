@@ -5,4 +5,8 @@ public final class CustomerCommands {
         String firstName,
         String lastName
     ){}
+
+    public record DeleteCustomer(){
+        
+    }
 }
