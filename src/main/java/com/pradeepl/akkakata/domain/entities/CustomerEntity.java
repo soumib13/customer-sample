@@ -3,8 +3,6 @@ package com.pradeepl.akkakata.domain.entities;
 import akka.javasdk.annotations.ComponentId;
 import akka.javasdk.eventsourcedentity.EventSourcedEntity;
 
-import java.time.Instant;
-
 import com.pradeepl.akkakata.domain.commands.CustomerCommands.CreateCustomer;
 import com.pradeepl.akkakata.domain.events.CustomerEvents;
 import com.pradeepl.akkakata.domain.events.CustomerEvents.customerCreated;
