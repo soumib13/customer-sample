@@ -2,17 +2,19 @@
 
 Companion sample project for the **Akka SDK training track**. Each branch in
 this repo maps to a checkpoint in one of the training decks — clone,
-`git checkout` the branch for your current lesson, and code along.
+`git checkout` the branch for your current day, and code along.
 
 ## The training track
 
-All three decks are hosted on GitHub Pages:
+All five decks are hosted on GitHub Pages:
 
-| Deck | Duration | Sample branch(es) | Link |
-|------|----------|-------------------|------|
-| **Akka SDK Fundamentals** | 3 hours | `main` | [Open deck](https://pradeeploganathan.github.io/akka-presentations/training/akka-sdk-fundamentals-3h/generated/overview/) |
-| **Workflows & Consumers** | Day-long | `workflows`, `consumers` | [Open deck](https://pradeeploganathan.github.io/akka-presentations/training/akka-sdk-workflows-day/generated/overview/) |
-| **Akka SDK Mastery** | 5 days | `agents` | [Open deck](https://pradeeploganathan.github.io/akka-presentations/training/akka-sdk-mastery-5d/generated/overview/) |
+| Day | Deck | Branch | Link |
+|-----|------|--------|------|
+| 1 | **Akka SDK Fundamentals** | `main` | [Open deck](https://pradeeploganathan.github.io/akka-presentations/training/akka-sdk-fundamentals/generated/overview/) |
+| 2 | **Workflows & Consumers** | `workflows` → `consumers` | [Open deck](https://pradeeploganathan.github.io/akka-presentations/training/akka-sdk-workflows/generated/overview/) |
+| 3 | **Agents & MCP** | `agents` | [Open deck](https://pradeeploganathan.github.io/akka-presentations/training/akka-sdk-agents/generated/overview/) |
+| 4 | **Testing** | `tests` | [Open deck](https://pradeeploganathan.github.io/akka-presentations/training/akka-sdk-testing/generated/overview/) |
+| 5 | **Deploy & Multi-region** | `agents` (deploys what's already there) | [Open deck](https://pradeeploganathan.github.io/akka-presentations/training/akka-sdk-deploy/generated/overview/) |
 
 Full presentations catalogue: <https://pradeeploganathan.github.io/akka-presentations/>
 
@@ -27,9 +29,13 @@ main         Customer + CustomerPreferences (event-sourced + KVE)
 workflows      abandon-cart timer, Inventory/Payment KVE stubs
   ↓          + CustomerAuditConsumer, AuditLogEntity
 consumers
-  ↓          + SupportAgent (OpenAI), CustomerMcpServer (MCP)
-agents
+  ↓          + SupportAgent (OpenAI), CustomerMcpServer (MCP),
+agents         CustomerEntity.get() query
+  ↓          + Baseline test suite (Day 4 lab starting point)
+tests
 ```
+
+Day 5's deck doesn't add a branch — its whole story is "deploy the code you already have on `agents`."
 
 Bug fixes made on `main` should be merged forward through the chain.
 
@@ -37,8 +43,9 @@ Bug fixes made on `main` should be merged forward through the chain.
 
 - **Java 21+**
 - **Maven 3.8+**
-- **OpenAI API key** — optional; only needed on the `agents` branch
+- **OpenAI API key** — optional; only needed on the `agents` (and later) branches
 - **Docker + a container registry** — optional; only needed for the Day-5 deploy lab
+- **An Akka account** — for the Day-5 hands-on deploy
 
 No database, no message broker, no Kubernetes required for local development.
 
@@ -77,6 +84,9 @@ src/main/java/com/pradeepl/akkakata/
 ├── consumers/         Reactive processors (consumers branch onward)
 ├── mcp/               MCP server (agents branch)
 └── api/               HTTP endpoints
+
+src/test/java/com/pradeepl/akkakata/   (tests branch onward)
+    baseline TestKit suite for Day 4
 ```
 
 ## Working through the training
@@ -87,7 +97,7 @@ src/main/java/com/pradeepl/akkakata/
 - `PUT /api/customers/{id}/preferences`, `GET /api/customers/{id}/preferences`
 - Focus: entities (value + event-sourced), views, endpoints, event sourcing
 
-### Day 2 morning — Workflows (`workflows`)
+### Day 2 — Workflows & Consumers (`workflows` → `consumers`)
 
 ```bash
 git checkout workflows
@@ -100,17 +110,16 @@ mvn compile exec:java
 - `GET /api/orders/{orderId}` — final entity state
 - `GET /api/orders/customer/{customerId}` — view projection
 
-### Day 2 afternoon — Consumers (`consumers`)
+Later in the day, switch to `consumers`:
 
 ```bash
 git checkout consumers
-mvn compile exec:java
 ```
 
 - Create then delete a customer, then `GET /api/audit/customers/{id}`
 - Audit entries appear asynchronously via `CustomerAuditConsumer`
 
-### Days 3–5 — Agents & MCP (`agents`)
+### Day 3 — Agents & MCP (`agents`)
 
 ```bash
 git checkout agents
@@ -129,6 +138,27 @@ curl -XPOST http://localhost:9000/mcp \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}'
 ```
 
+### Day 4 — Testing (`tests`)
+
+```bash
+git checkout tests
+mvn test
+```
+
+Nine seed tests should pass (`CustomerEntityTest`, `OrderEntityTest`,
+`CustomerPreferencesEntityTest`). The lab extends this suite — add
+integration tests, chaos tests, contract tests as covered in the deck.
+
+### Day 5 — Deploy & Multi-region
+
+```bash
+# still on tests (or agents — the code is what matters here, not the test suite)
+akka auth login
+akka services deploy akka-workshop ghcr.io/<you>/akka-workshop:1.0
+```
+
+See the [deck](https://pradeeploganathan.github.io/akka-presentations/training/akka-sdk-deploy/generated/overview/) for the full checklist.
+
 ## Additional docs
 
 - [`BUILD-TUTORIAL.md`](BUILD-TUTORIAL.md) — line-by-line walkthrough of the initial `main`-branch build
@@ -146,4 +176,5 @@ template for production. Some deliberate simplifications:
   fires under the current workflow shape — the workflow charges immediately
   after reserve. Left in as a teaching artifact for the timer block; a
   follow-up will restructure the workflow to pause and wait for payment.
-- Tests are intentionally sparse; extending them is the Day 4 lab.
+- The `tests` branch ships nine baseline TestKit tests as a Day 4 starting
+  point — the lab extends them with integration, chaos, and contract tests.
