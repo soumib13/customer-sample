@@ -1,20 +1,21 @@
 # Akka Workshop — training sample
 
-Companion sample project for the **Akka SDK training track**. Each branch in
-this repo maps to a checkpoint in one of the training decks — clone,
-`git checkout` the branch for your current day, and code along.
+Companion sample project for a **five-day Akka SDK developer training**. Each
+day is a self-contained deck with a matching git branch (or two) — clone,
+`git checkout` your current day's branch, and code along.
 
-## The training track
+The track composes flexibly: run **Day 1 alone as a 3-hour intro**, **Days 1–2
+as a day-long deep-dive**, or **the full arc as a five-day mastery track**.
 
-All five decks are hosted on GitHub Pages:
+## The 5-day training
 
-| Day | Deck | Branch | Link |
-|-----|------|--------|------|
-| 1 | **Akka SDK Fundamentals** | `main` | [Open deck](https://pradeeploganathan.github.io/akka-presentations/training/akka-sdk-fundamentals/generated/overview/) |
-| 2 | **Workflows & Consumers** | `workflows` → `consumers` | [Open deck](https://pradeeploganathan.github.io/akka-presentations/training/akka-sdk-workflows/generated/overview/) |
-| 3 | **Agents & MCP** | `agents` | [Open deck](https://pradeeploganathan.github.io/akka-presentations/training/akka-sdk-agents/generated/overview/) |
-| 4 | **Testing** | `tests` | [Open deck](https://pradeeploganathan.github.io/akka-presentations/training/akka-sdk-testing/generated/overview/) |
-| 5 | **Deploy & Multi-region** | `agents` (deploys what's already there) | [Open deck](https://pradeeploganathan.github.io/akka-presentations/training/akka-sdk-deploy/generated/overview/) |
+| Day | Deck | What you'll learn | Branch(es) |
+|-----|------|-------------------|------------|
+| 1 | **[Fundamentals](https://pradeeploganathan.github.io/akka-presentations/training/akka-sdk-fundamentals/generated/overview/)** | Entities (value + event-sourced), views, endpoints, event sourcing from first principles | `main` |
+| 2 | **[Workflows & Consumers](https://pradeeploganathan.github.io/akka-presentations/training/akka-sdk-workflows/generated/overview/)** | Saga orchestration with compensation, timers, cross-component calls, and reactive event processing | `workflows` → `consumers` |
+| 3 | **[Agents & MCP](https://pradeeploganathan.github.io/akka-presentations/training/akka-sdk-agents/generated/overview/)** | LLM-backed components with function tools, session memory, structured responses, and MCP server exposure | `agents` |
+| 4 | **[Testing](https://pradeeploganathan.github.io/akka-presentations/training/akka-sdk-testing/generated/overview/)** | TestKit patterns per component, integration + chaos + contract tests, idempotency | `tests` |
+| 5 | **[Deploy & Multi-region](https://pradeeploganathan.github.io/akka-presentations/training/akka-sdk-deploy/generated/overview/)** | `akka` CLI deploy, rolling upgrades, autoscale, multi-region topology, observability, runbooks | *no new branch — deploys the code on `agents`* |
 
 Full presentations catalogue: <https://pradeeploganathan.github.io/akka-presentations/>
 
