@@ -1,7 +1,7 @@
-# Akka Workshop — training sample
+# Akka Workshop - Training sample
 
 Companion sample project for a **five-day Akka SDK developer training**. Each
-day is a self-contained deck with a matching git branch (or two) — clone,
+day is a self-contained deck with a matching git branch (or two). Clone,
 `git checkout` your current day's branch, and code along.
 
 The track composes flexibly: run **Day 1 alone as a 3-hour intro**, **Days 1–2
