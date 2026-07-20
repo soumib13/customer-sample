@@ -147,13 +147,12 @@ mvn test
 ```
 
 Nine seed tests should pass (`CustomerEntityTest`, `OrderEntityTest`,
-`CustomerPreferencesEntityTest`). The lab extends this suite — add
-integration tests, chaos tests, contract tests as covered in the deck.
+`CustomerPreferencesEntityTest`). The lab extends this suite. It adds integration tests, chaos tests, contract tests as covered in the deck.
 
 ### Day 5 — Deploy & Multi-region
 
 ```bash
-# still on tests (or agents — the code is what matters here, not the test suite)
+# still on tests or agents. ( The code is what matters here, not the test suite)
 akka auth login
 akka services deploy akka-workshop ghcr.io/<you>/akka-workshop:1.0
 ```
@@ -167,15 +166,8 @@ See the [deck](https://pradeeploganathan.github.io/akka-presentations/training/a
 
 ## Notes on this sample
 
-This code is intentionally minimal — enough to teach the SDK's shape, not a
-template for production. Some deliberate simplifications:
+This code is intentionally minimal. It is designed to teach the SDK's shape.It is not a template for production. Some deliberate simplifications:
 
-- `InventoryEntity` and `PaymentEntity` on the `workflows` branch are
-  in-memory stubs that make the workflow's cross-component orchestration
-  visible without external services.
-- The abandon-cart timer on the `workflows` branch is scheduled but never
-  fires under the current workflow shape — the workflow charges immediately
-  after reserve. Left in as a teaching artifact for the timer block; a
-  follow-up will restructure the workflow to pause and wait for payment.
-- The `tests` branch ships nine baseline TestKit tests as a Day 4 starting
-  point — the lab extends them with integration, chaos, and contract tests.
+- `InventoryEntity` and `PaymentEntity` on the `workflows` branch are in-memory stubs that make the workflow's cross-component orchestration visible without external services.
+- The abandon-cart timer on the `workflows` branch is scheduled but never fires under the current workflow shape. The workflow charges immediately after reserve. It is left in as a teaching artifact for the timer block; a follow-up will restructure the workflow to pause and wait for payment.
+- The `tests` branch ships nine baseline TestKit tests as a Day 4 starting point. The lab extends them with integration, chaos, and contract tests.
