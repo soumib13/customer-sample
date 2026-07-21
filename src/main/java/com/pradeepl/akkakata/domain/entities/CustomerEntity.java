@@ -35,7 +35,15 @@ public class CustomerEntity extends EventSourcedEntity<CustomerState, CustomerEv
 
   }
 
+  public Effect<CustomerState> get() {
+    return effects().reply(currentState());
+  }
+
   public Effect<String> delete(DeleteCustomer cmd) {
+    if (currentState().customerId() == null) {
+      return effects().error("Customer not found");
+    }
+
     var id = currentState().customerId();
     var firstName = currentState().FirstName();
     var lastName = currentState().LastName();

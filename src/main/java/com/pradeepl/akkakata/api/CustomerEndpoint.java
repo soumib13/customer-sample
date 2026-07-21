@@ -21,6 +21,7 @@ import java.util.List;
 import com.pradeepl.akkakata.domain.entities.CustomerEntity;
 import com.pradeepl.akkakata.views.CustomerView;
 import com.pradeepl.akkakata.views.CustomerView.customerEntry;
+import com.pradeepl.akkakata.views.CustomerView.customerEntries;
 import com.pradeepl.akkakata.domain.commands.CustomerCommands.*;
 
 
@@ -57,12 +58,12 @@ public class CustomerEndpoint {
             .method(CustomerEntity::delete)
             .invoke(cmd);
 
-        return "OK";
+        return "Deleted Customer with ID: " + customerId;
     }
 
     @Get("/customers")
-    public customerEntry getCustomers() {
-        
+    public customerEntries getCustomers() {
+
         return client.forView()
             .method(CustomerView::getAll)
             .invoke();

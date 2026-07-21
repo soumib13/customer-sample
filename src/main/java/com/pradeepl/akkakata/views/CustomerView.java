@@ -19,8 +19,8 @@ public class CustomerView extends View{
     public record customerEntry(String customerId, String FirstName, String LastName, boolean deleted){}
     public record customerEntries(List<customerEntry> entries) {}
 
-    @Query("SELECT * FROM customers_table")
-    public QueryEffect<customerEntry> getAll() {
+    @Query("SELECT * AS entries FROM customers_table")
+    public QueryEffect<customerEntries> getAll() {
          return queryResult();
     }
 
