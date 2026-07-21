@@ -1,14 +1,14 @@
-package com.pradeepl.akkakata.domain.entities;
+package com.soumib.akkakata.domain.entities;
 
 import akka.javasdk.annotations.ComponentId;
 import akka.javasdk.eventsourcedentity.EventSourcedEntity;
 
-import com.pradeepl.akkakata.domain.commands.CustomerCommands.CreateCustomer;
-import com.pradeepl.akkakata.domain.commands.CustomerCommands.DeleteCustomer;
-import com.pradeepl.akkakata.domain.events.CustomerEvents;
-import com.pradeepl.akkakata.domain.events.CustomerEvents.customerCreated;
-import com.pradeepl.akkakata.domain.events.CustomerEvents.customerDeleted;
-import com.pradeepl.akkakata.domain.model.CustomerState;
+import com.soumib.akkakata.domain.commands.CustomerCommands.CreateCustomer;
+import com.soumib.akkakata.domain.commands.CustomerCommands.DeleteCustomer;
+import com.soumib.akkakata.domain.events.CustomerEvents;
+import com.soumib.akkakata.domain.events.CustomerEvents.customerCreated;
+import com.soumib.akkakata.domain.events.CustomerEvents.customerDeleted;
+import com.soumib.akkakata.domain.model.CustomerState;
 
 @ComponentId("Customer")
 public class CustomerEntity extends EventSourcedEntity<CustomerState, CustomerEvents>{

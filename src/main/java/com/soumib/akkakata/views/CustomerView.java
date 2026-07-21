@@ -1,10 +1,10 @@
-package com.pradeepl.akkakata.views;
+package com.soumib.akkakata.views;
 
 import java.util.List;
 
-import com.pradeepl.akkakata.domain.entities.CustomerEntity;
-import com.pradeepl.akkakata.domain.events.CustomerEvents.customerCreated;
-import com.pradeepl.akkakata.domain.events.CustomerEvents.customerDeleted;
+import com.soumib.akkakata.domain.entities.CustomerEntity;
+import com.soumib.akkakata.domain.events.CustomerEvents.customerCreated;
+import com.soumib.akkakata.domain.events.CustomerEvents.customerDeleted;
 
 import akka.javasdk.annotations.ComponentId;
 import akka.javasdk.annotations.Consume;

@@ -1,5 +1,6 @@
-package com.pradeepl.akkakata.api;
+package com.soumib.akkakata.api;
 
+import akka.http.javadsl.model.StatusCodes;
 import akka.javasdk.annotations.Acl;
 import akka.javasdk.annotations.http.Get;
 import akka.javasdk.annotations.http.HttpEndpoint;
@@ -7,10 +8,10 @@ import akka.javasdk.annotations.http.Put;
 import akka.javasdk.client.ComponentClient;
 import akka.javasdk.http.HttpException;
 
-import com.pradeepl.akkakata.domain.commands.PreferencesCommands.SetPreferences;
-import com.pradeepl.akkakata.domain.entities.CustomerEntity;
-import com.pradeepl.akkakata.domain.entities.CustomerPreferencesEntity;
-import com.pradeepl.akkakata.domain.model.CustomerPreferences;
+import com.soumib.akkakata.domain.commands.PreferencesCommands.SetPreferences;
+import com.soumib.akkakata.domain.entities.CustomerEntity;
+import com.soumib.akkakata.domain.entities.CustomerPreferencesEntity;
+import com.soumib.akkakata.domain.model.CustomerPreferences;
 
 @HttpEndpoint("/api")
 @Acl(allow = @Acl.Matcher(principal = Acl.Principal.INTERNET))
@@ -44,7 +45,7 @@ public class PreferencesEndpoint {
             .invoke();
 
         if (customer.customerId() == null || customer.deleted()) {
-            throw HttpException.notFound();
+            throw HttpException.error(StatusCodes.NOT_FOUND, "Customer with ID " + customerId + " not found");
         }
     }
 }

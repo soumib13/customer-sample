@@ -1,4 +1,4 @@
-package com.pradeepl.akkakata.domain.events;
+package com.soumib.akkakata.domain.events;
 
 public sealed interface CustomerEvents {
     

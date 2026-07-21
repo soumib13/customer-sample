@@ -1,4 +1,4 @@
-package com.pradeepl.akkakata.domain.model;
+package com.soumib.akkakata.domain.model;
 
 public record CustomerPreferences(
     String theme,

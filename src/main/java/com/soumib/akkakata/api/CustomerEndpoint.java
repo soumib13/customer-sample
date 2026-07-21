@@ -1,4 +1,4 @@
-package com.pradeepl.akkakata.api;
+package com.soumib.akkakata.api;
 
 import akka.javasdk.annotations.http.Delete;
 import akka.javasdk.annotations.http.Get;
@@ -18,11 +18,11 @@ import akka.javasdk.http.HttpResponses;
 
 import java.util.List;
 
-import com.pradeepl.akkakata.domain.entities.CustomerEntity;
-import com.pradeepl.akkakata.views.CustomerView;
-import com.pradeepl.akkakata.views.CustomerView.customerEntry;
-import com.pradeepl.akkakata.views.CustomerView.customerEntries;
-import com.pradeepl.akkakata.domain.commands.CustomerCommands.*;
+import com.soumib.akkakata.domain.entities.CustomerEntity;
+import com.soumib.akkakata.views.CustomerView;
+import com.soumib.akkakata.views.CustomerView.customerEntry;
+import com.soumib.akkakata.views.CustomerView.customerEntries;
+import com.soumib.akkakata.domain.commands.CustomerCommands.*;
 
 
 @HttpEndpoint("/api")

@@ -1,10 +1,10 @@
-package com.pradeepl.akkakata.domain.entities;
+package com.soumib.akkakata.domain.entities;
 
 import akka.javasdk.annotations.ComponentId;
 import akka.javasdk.keyvalueentity.KeyValueEntity;
 
-import com.pradeepl.akkakata.domain.commands.PreferencesCommands.SetPreferences;
-import com.pradeepl.akkakata.domain.model.CustomerPreferences;
+import com.soumib.akkakata.domain.commands.PreferencesCommands.SetPreferences;
+import com.soumib.akkakata.domain.model.CustomerPreferences;
 
 @ComponentId("customer-preferences")
 public class CustomerPreferencesEntity extends KeyValueEntity<CustomerPreferences> {

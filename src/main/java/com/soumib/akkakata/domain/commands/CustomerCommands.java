@@ -1,4 +1,4 @@
-package com.pradeepl.akkakata.domain.commands;
+package com.soumib.akkakata.domain.commands;
 
 public final class CustomerCommands {
     public record CreateCustomer(
