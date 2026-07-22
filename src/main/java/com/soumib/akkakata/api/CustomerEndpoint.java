@@ -5,22 +5,12 @@ import akka.javasdk.annotations.http.Get;
 import akka.javasdk.annotations.http.HttpEndpoint;
 import akka.javasdk.annotations.http.Post;
 import akka.javasdk.client.ComponentClient;
-import akka.http.javadsl.model.ContentTypes;
-import akka.http.javadsl.model.HttpEntity;
-import akka.http.javadsl.model.HttpResponse;
-import akka.http.javadsl.model.MediaTypes;
 import akka.javasdk.annotations.Acl;
-
-import akka.javasdk.http.HttpClient;
-import akka.javasdk.http.HttpClientProvider;
-import akka.javasdk.http.HttpException;
-import akka.javasdk.http.HttpResponses;
 
 import java.util.List;
 
 import com.soumib.akkakata.domain.entities.CustomerEntity;
 import com.soumib.akkakata.views.CustomerView;
-import com.soumib.akkakata.views.CustomerView.customerEntry;
 import com.soumib.akkakata.views.CustomerView.customerEntries;
 import com.soumib.akkakata.domain.commands.CustomerCommands.*;
 
