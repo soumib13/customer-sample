@@ -7,6 +7,11 @@ public final class CustomerCommands {
     ){}
 
     public record DeleteCustomer(){
-        
+
     }
+
+    public record UpdateCustomer(
+        String firstName,
+        String lastName
+    ){}
 }

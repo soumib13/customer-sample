@@ -4,6 +4,7 @@ import akka.javasdk.annotations.http.Delete;
 import akka.javasdk.annotations.http.Get;
 import akka.javasdk.annotations.http.HttpEndpoint;
 import akka.javasdk.annotations.http.Post;
+import akka.javasdk.annotations.http.Put;
 import akka.javasdk.client.ComponentClient;
 import akka.javasdk.annotations.Acl;
 
@@ -23,7 +24,9 @@ public class CustomerEndpoint {
 
     public record CreateCustomerResponse(String customerId, String FirstName, String LastName){}
     public record CreateCustomerRequest(String customerId, String FirstName, String LastName){}
-    public record GetAllCustomersResponse( List<CreateCustomerResponse> response){} 
+    public record GetAllCustomersResponse( List<CreateCustomerResponse> response){}
+    public record UpdateCustomerRequest(String FirstName, String LastName){}
+    public record UpdateCustomerResponse(String customerId, String FirstName, String LastName){}
 
     public CustomerEndpoint(ComponentClient client) {
         this.client = client;
@@ -38,6 +41,16 @@ public class CustomerEndpoint {
             .invoke(cmd);
 
         return new CreateCustomerResponse( customerId, request.FirstName, request.LastName);
+    }
+
+    @Put("/customers/{customerId}")
+    public UpdateCustomerResponse updateCustomer(String customerId, UpdateCustomerRequest request) {
+        var cmd = new UpdateCustomer(request.FirstName, request.LastName);
+        client.forEventSourcedEntity(customerId)
+            .method(CustomerEntity::update)
+            .invoke(cmd);
+
+        return new UpdateCustomerResponse(customerId, request.FirstName, request.LastName);
     }
 
     @Delete("/customers/{customerId}")

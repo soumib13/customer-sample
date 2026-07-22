@@ -14,4 +14,10 @@ public sealed interface CustomerEvents {
         String LastName
     ) implements CustomerEvents {}
 
+    public record customerUpdated(
+        String customerId,
+        String FirstName,
+        String LastName
+    ) implements CustomerEvents {}
+
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import com.soumib.akkakata.domain.entities.CustomerEntity;
 import com.soumib.akkakata.domain.events.CustomerEvents.customerCreated;
 import com.soumib.akkakata.domain.events.CustomerEvents.customerDeleted;
+import com.soumib.akkakata.domain.events.CustomerEvents.customerUpdated;
 
 import akka.javasdk.annotations.ComponentId;
 import akka.javasdk.annotations.Consume;
@@ -27,13 +28,17 @@ public class CustomerView extends View{
     @Table("customers_table")
      @Consume.FromEventSourcedEntity(CustomerEntity.class)
     public static class CustomersUpdater extends TableUpdater<customerEntry> {
-        
+
         public Effect<customerEntry> onEvent(customerCreated event) {
             return effects().updateRow(new customerEntry(event.customerId(), event.FirstName(),event.LastName(), false));
         }
 
         public Effect<customerEntry> onEvent(customerDeleted event) {
             return effects().updateRow(new customerEntry(event.customerId(), event.FirstName(),event.LastName(), true));
+        }
+
+        public Effect<customerEntry> onEvent(customerUpdated event) {
+            return effects().updateRow(new customerEntry(event.customerId(), event.FirstName(),event.LastName(), false));
         }
 
     }
