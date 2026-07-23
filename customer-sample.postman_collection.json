@@ -1,0 +1,214 @@
+{
+  "info": {
+    "name": "customer-sample (Akka)",
+    "description": "Order saga, inventory, customers and preferences endpoints for the customer-sample Akka service.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:9000" },
+    { "key": "orderId", "value": "" },
+    { "key": "customerId", "value": "cust-1" }
+  ],
+  "item": [
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Place order",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/orders", "host": ["{{baseUrl}}"], "path": ["api", "orders"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"{{customerId}}\",\n  \"lines\": [\n    { \"sku\": \"sku-1\", \"qty\": 2, \"unitPriceCents\": 500 }\n  ],\n  \"idempotencyKey\": null\n}"
+            }
+          }
+        },
+        {
+          "name": "Place order (insufficient stock -> compensate)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/orders", "host": ["{{baseUrl}}"], "path": ["api", "orders"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"{{customerId}}\",\n  \"lines\": [\n    { \"sku\": \"sku-3\", \"qty\": 9999, \"unitPriceCents\": 100 }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "Place order (payment declined -> compensate)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/orders", "host": ["{{baseUrl}}"], "path": ["api", "orders"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"{{customerId}}\",\n  \"lines\": [\n    { \"sku\": \"sku-2\", \"qty\": 1, \"unitPriceCents\": 0 }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "Place order (idempotent retry)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/orders", "host": ["{{baseUrl}}"], "path": ["api", "orders"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"{{customerId}}\",\n  \"lines\": [\n    { \"sku\": \"sku-1\", \"qty\": 1, \"unitPriceCents\": 500 }\n  ],\n  \"idempotencyKey\": \"retry-abc\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Cancel order",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{orderId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "{{orderId}}", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "Get order by id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{orderId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "{{orderId}}"]
+            }
+          }
+        },
+        {
+          "name": "List all orders",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/orders", "host": ["{{baseUrl}}"], "path": ["api", "orders"] }
+          }
+        },
+        {
+          "name": "List orders by customer",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/customer/{{customerId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "customer", "{{customerId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Inventory",
+      "item": [
+        {
+          "name": "Get inventory",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/inventory", "host": ["{{baseUrl}}"], "path": ["api", "inventory"] }
+          }
+        },
+        {
+          "name": "Restock SKU",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/inventory/restock", "host": ["{{baseUrl}}"], "path": ["api", "inventory", "restock"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sku\": \"sku-3\",\n  \"qty\": 50\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "Create customer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/customers", "host": ["{{baseUrl}}"], "path": ["api", "customers"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"{{customerId}}\",\n  \"FirstName\": \"Jane\",\n  \"LastName\": \"Doe\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update customer",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/{{customerId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers", "{{customerId}}"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"FirstName\": \"Janet\",\n  \"LastName\": \"Doe\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete customer",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/{{customerId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers", "{{customerId}}"]
+            }
+          }
+        },
+        {
+          "name": "List all customers",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/customers", "host": ["{{baseUrl}}"], "path": ["api", "customers"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Preferences",
+      "item": [
+        {
+          "name": "Set preferences",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/{{customerId}}/preferences",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers", "{{customerId}}", "preferences"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"theme\": \"dark\",\n  \"locale\": \"en-US\",\n  \"marketingOptIn\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Get preferences",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/{{customerId}}/preferences",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers", "{{customerId}}", "preferences"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
